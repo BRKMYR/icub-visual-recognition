@@ -48,6 +48,13 @@ transformer.set_channel_swap('data', (2,1,0))  # the reference model has channel
 # set net to batch size of 50
 net.blobs['data'].reshape(50,3,227,227)
 
+# load labels
+imagenet_labels_filename = caffe_root + 'data/iCubWorld28/synsets.txt'
+try:
+	labels = np.loadtxt(imagenet_labels_filename, str, delimiter='\t')
+except:
+	print("Synsets.txt with iCubWorld28 labels not found...")
+
 while True:
 
     # Create numpy array to receive the image and the YARP image wrapped around it
@@ -58,8 +65,8 @@ while True:
     
     # Read the data from the port into the image
     input_port.read(yarp_image)
-    #filename= "/home/niklas/yarp_image.jpeg"
-    #cipy.misc.toimage(img_array, cmin=0.0, cmax=255.0).save(filename)
+    filename= "/home/niklas/last_yarp_image.jpeg"
+    scipy.misc.toimage(img_array, cmin=0.0, cmax=255.0).save(filename)
 
     # Predict image
     try:
@@ -71,7 +78,6 @@ while True:
     out = net.forward()
     print("Predicted class is #{}.".format(out['prob'][0].argmax()))
     
-    #plt.imshow(transformer.deprocess('data', net.blobs['data'].data[0]))
     # sort top k predictions from softmax output
-    #top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
-    #print labels[top_k]
+    top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
+    print labels[top_k]
