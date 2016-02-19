@@ -59,8 +59,8 @@ while True:
          continue
     out = net.forward()
     print("Predicted class is #{}.".format(out['prob'][0].argmax()))
-
-	# plt.imshow(transformer.deprocess('data', net.blobs['data'].data[0]))
-	# sort top k predictions from softmax output
-	# top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]	
-	# print labels[top_k]
+    
+    #plt.imshow(transformer.deprocess('data', net.blobs['data'].data[0]))
+    # sort top k predictions from softmax output
+    top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
+    print labels[top_k]
