@@ -16,12 +16,12 @@ plt.rcParams['image.interpolation'] = 'nearest'
 plt.rcParams['image.cmap'] = 'gray'
 
 import os
-if not os.path.isfile(caffe_root + 'models/bvlc_reference_caffenet/caffenet_train_iter_16160.caffemodel'):
+if not os.path.isfile(caffe_root + 'models/bvlc_reference_caffenet_iCubWorld28/caffenet_train_iter_16160.caffemodel'):
     print("CaffeNet model trained with iCubWorld28 dataset not found...")
 
 caffe.set_mode_cpu()
-net = caffe.Net(caffe_root + 'models/bvlc_reference_caffenet/deploy.prototxt',
-                caffe_root + 'models/bvlc_reference_caffenet/caffenet_train_iter_16160.caffemodel',
+net = caffe.Net(caffe_root + 'models/bvlc_reference_caffenet_iCubWorld28/deploy.prototxt',
+                caffe_root + 'models/bvlc_reference_caffenet_iCubWorld28/caffenet_train_iter_16160.caffemodel',
                 caffe.TEST)
 
 # input preprocessing: 'data' is the name of the input blob == net.inputs[0]

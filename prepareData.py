@@ -1,5 +1,5 @@
 # Custom data preparation script for iCubWorld28 dataset which prepares "train.txt" and "test.txt" for Caffe Deep Learning
-# The order of folders is "hardcoded", i.e. specific for the used computer (this maybe different for other computers)
+# The order of folders is "hardcoded", i.e. specific for the used computer (this is maybe different for other computers)
 
 import os
 from os import listdir
@@ -17,16 +17,13 @@ for path, subdirs, files in os.walk(folder):
 
 # SYNSETS.TXT
 synsets_txt = open('/home/niklas/Desktop/textfiles/synsets.txt', 'w')
-synset_words_txt= open('/home/niklas/Desktop/textfiles/detsynset_words.txt', 'w')
 ctr=0
 for temp_class in classes:
 	#print temp_class
 	if temp_class!='day1' and temp_class!='day2' and temp_class!='day3' and temp_class!='day4' and temp_class!='day4_manual_crop' and temp_class!='plate' and temp_class!='laundry-detergent' and temp_class!='sprayer' and temp_class!='cup' and temp_class!='soap' and temp_class!='dishwashing-detergent' and temp_class!='sponge' and ctr<28:            	
 		synsets_txt.write(temp_class+'\n')
-		synset_words_txt.write(temp_class+' '+temp_class+'\n')
 		ctr=ctr+1
 synsets_txt.close()
-synset_words_txt.close()
 
 # TRAIN-Part 2
 classnr=0
