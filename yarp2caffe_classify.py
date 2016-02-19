@@ -7,6 +7,7 @@ import sys
 import caffe
 import os
 #import matplotlib.pylab
+import scipy
  
 # Initialise YARP
 yarp.Network.init()
@@ -27,12 +28,12 @@ caffe_root = '/home/niklas/Downloads/caffe/'  # this file is expected to be in {
 sys.path.insert(0, caffe_root + 'python')
 sys.path.insert(0, caffe_root + 'python/Scripts')
 
-if not os.path.isfile(caffe_root + 'models/bvlc_reference_caffenet/caffenet_train_iter_16160.caffemodel'):
+if not os.path.isfile(caffe_root + 'models/bvlc_reference_caffenet_iCubWorld28/caffenet_train_iter_16160.caffemodel'):
     print("CaffeNet model trained with iCubWorld28 dataset not found...")
 
 caffe.set_mode_cpu()
-net = caffe.Net(caffe_root + 'models/bvlc_reference_caffenet/deploy.prototxt',
-                caffe_root + 'models/bvlc_reference_caffenet/caffenet_train_iter_16160.caffemodel',
+net = caffe.Net(caffe_root + 'models/bvlc_reference_caffenet_iCubWorld28/deploy.prototxt',
+                caffe_root + 'models/bvlc_reference_caffenet_iCubWorld28/caffenet_train_iter_16160.caffemodel',
                 caffe.TEST)
 
 # input preprocessing: 'data' is the name of the input blob == net.inputs[0]
@@ -48,12 +49,22 @@ transformer.set_channel_swap('data', (2,1,0))  # the reference model has channel
 net.blobs['data'].reshape(50,3,227,227)
 
 while True:
+
+    # Create numpy array to receive the image and the YARP image wrapped around it
+    img_array = np.zeros((256, 256, 3), dtype=np.uint8)
+    yarp_image = yarp.ImageRgb()
+    yarp_image.resize(256, 256)
+    yarp_image.setExternal(img_array, img_array.shape[1], img_array.shape[0])
+    
     # Read the data from the port into the image
     input_port.read(yarp_image)
-    
+    #filename= "/home/niklas/yarp_image.jpeg"
+    #cipy.misc.toimage(img_array, cmin=0.0, cmax=255.0).save(filename)
+
     # Predict image
     try:
-         net.blobs['data'].data[...] = transformer.preprocess('data', yarp_image)
+         #net.blobs['data'].data[...] = transformer.preprocess('data', caffe.io.load_image(filename))
+	 net.blobs['data'].data[...] = transformer.preprocess('data', img_array)
     except:
          print("yarp_image not received...")
          continue
@@ -62,5 +73,5 @@ while True:
     
     #plt.imshow(transformer.deprocess('data', net.blobs['data'].data[0]))
     # sort top k predictions from softmax output
-    top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
-    print labels[top_k]
+    #top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
+    #print labels[top_k]
