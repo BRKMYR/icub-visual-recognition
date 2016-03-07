@@ -32,6 +32,7 @@ tag=''
 prefix=''
 txt = open('/home/niklas/Desktop/textfiles/train.txt', 'w')
 filename_txt=open('/home/niklas/Desktop/textfiles/train_filenames.txt', 'w')
+classNumbers_txt= open('/home/niklas/Desktop/textfiles/train_TRUE_classNumbers.txt', 'w')
 for list in mylist:
 	#list = mylist.pop(0)
 
@@ -146,10 +147,11 @@ for list in mylist:
 	txt.write(list+' '+str(classnr)+'\n')
 	#filename_txt.write(tag+'/'+prefix+'/'+dir + '/' + filename+'\n')
 	filename_txt.write(list+'\n')
-
+	classNumbers_txt.write(str(classnr)+' ')
 
 filename_txt.close()
 txt.close()
+classNumbers_txt.close()
 
 # TEST-Folder
 folder = '/home/niklas/Downloads/iCubWorld28/test'
