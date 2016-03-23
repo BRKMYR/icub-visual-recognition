@@ -8,6 +8,12 @@
 # attribute_material: 'ceramic' (1), 'plastic' (2), 'furry' (3), 'clear' (4), 'wet' (5) (describes material/texture)
 # affordance: 'hold' (1), 'drink' (2), 'eat' (3), 'clean' (4), 'open' (5), 'cut' (6) (describes possible actions with object)
 
+###########################################################################################################################
+## SET HERE, how Caffe shall be trained ('28_objects', '7_objects', 'attribute_shape', 'attribute_material', 'affordance'):
+TRAIN_MODE = 'attribute_shape'
+
+###########################################################################################################################
+
 import os
 from os import listdir
 from os.path import isfile, join
@@ -229,7 +235,6 @@ for list in mylist:
 		attribute_material ='wet'
 		affordance = 'clean'
 
-	txt.write(list+' '+str(classnr)+'\n')
 	filename_txt.write(list+'\n')
 	classNumbers_txt.write(str(classnr)+' ')
 	categoryNumbers_txt.write(str(categorynr)+' ')
@@ -281,6 +286,22 @@ for list in mylist:
 	attribute_shape_[iteration] = shape_num
 	attribute_material_[iteration] = material_num
 	affordance_[iteration] = affordance_num
+
+	selected_item = ''
+	if TRAIN_MODE == '28_objects':
+		selected_item=str(classnr)
+	elif TRAIN_MODE == '7_objects':
+		selected_item=str(categorynr)
+	elif TRAIN_MODE == 'attribute_shape':
+		selected_item=str(shape_num)
+	elif TRAIN_MODE == 'attribute_material':
+		selected_item=str(material_num)
+	elif TRAIN_MODE == 'affordance':
+		selected_item=str(affordance_num)
+	else:
+		print "Error: TRAIN_MODE is set incorrectly!\n"
+
+	txt.write(list+' '+selected_item+'\n')
 
 	iteration += 1
 
@@ -526,8 +547,6 @@ for list in mylist:
 		attribute_material ='wet'
 		affordance = 'clean'
 
-	txt.write(list+' '+str(classnr)+'\n')
-	filename_txt.write(list+'\n')
 	classNumbers_txt.write(str(classnr)+' ')
 	categoryNumbers_txt.write(str(categorynr)+' ')
 	attribute_shape_txt.write(attribute_shape + '\n')
@@ -578,6 +597,23 @@ for list in mylist:
 	attribute_shape_[iteration] = shape_num
 	attribute_material_[iteration] = material_num
 	affordance_[iteration] = affordance_num
+
+	selected_item = ''
+	if TRAIN_MODE == '28_objects':
+		selected_item=str(classnr)
+	elif TRAIN_MODE == '7_objects':
+		selected_item=str(categorynr)
+	elif TRAIN_MODE == 'attribute_shape':
+		selected_item=str(shape_num)
+	elif TRAIN_MODE == 'attribute_material':
+		selected_item=str(material_num)
+	elif TRAIN_MODE == 'affordance':
+		selected_item=str(affordance_num)
+	else:
+		print "Error: TRAIN_MODE is set incorrectly!\n"
+
+	txt.write(list+' '+selected_item+'\n')
+
 
 	iteration += 1
 
