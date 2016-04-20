@@ -40,10 +40,12 @@ yarp.Network.init()
 ## Ports
 # Create a port and connect it to the iCub simulator virtual camera
 input_port = yarp.Port()
+input_port.close()
 input_port.open("/python-image-port")
 yarp.Network.connect("/cropped_image/out", "/python-image-port")
  
 output_port = yarp.Port()
+output_port.close()
 output_port.open("/python-features-out")
 yarp.Network.connect("/python-features-out", "/matlab/read_features")
 
@@ -85,6 +87,10 @@ except:
 
 while True:
 
+    if(yarp.Network.isConnected("/python-features-out", "/matlab/read_features")==False):
+    	yarp.Network.connect("/python-features-out", "/matlab/read_features")	
+		
+
     # Create numpy array to receive the image and the YARP image wrapped around it
     img_array = np.zeros((256, 256, 3), dtype=np.uint8)
     yarp_image = yarp.ImageRgb()
@@ -125,4 +131,3 @@ while True:
     yarp_features.setExternal(features, features.shape[1], features.shape[0])
 
     output_port.write(yarp_features)
-
