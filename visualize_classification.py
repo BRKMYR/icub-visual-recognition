@@ -11,17 +11,44 @@ sys.path.insert(0, caffe_root + 'python')
 import caffe
 import os
 #############################################
+# iCubWorld28 or DATASET
+MODEL = 'iCubWorld28"
+# object, attribute_X, affordance
+MODEL_TYPE = 'object'
 
+if MODEL == 'DATASET':
+	if MODEL_TYPE == 'object':
+		dataset = "DATASET"
+		model = "bvlc_reference_caffenet_DATASET/object"
+		trained = "caffenet_train_iter_10000.caffemodel"
+		mean_file = "DATASET_mean.npy"
+		labels_file = 'data/DATASET/synsets.txt'
+	elif MODEL_TYPE == 'attribute_shape':
+	elif MODEL_TYPE == 'attribute_material':
+	elif MODEL_TYPE == 'attribute_color':
+	elif MODEL_TYPE == 'affordance':
+	else:
+		print "Wrong MODEL_TYPE set!"
 
-dataset = "DATASET"
-model = "bvlc_reference_caffenet_DATASET/object"
-trained = "caffenet_train_iter_10000.caffemodel"
-mean_file = "DATASET_mean.npy"
-labels_file = 'data/DATASET/synsets.txt'
-
+elif MODEL == 'iCubWorld28':
+	if MODEL_TYPE == 'object':
+		dataset = "iCubWorld28"
+		model = "bvlc_reference_caffenet_iCubWorld28/object"
+		trained = "caffenet_object.caffemodel"
+		mean_file = "iCubWorld_mean.npy"
+		labels_file = 'data/DATASET/synsets.txt'
+	elif MODEL_TYPE == 'attribute_shape':
+	elif MODEL_TYPE == 'attribute_material':
+	elif MODEL_TYPE == 'attribute_color':
+	elif MODEL_TYPE == 'affordance':
+	else:
+		print "Wrong MODEL_TYPE set!"
+else:
+	print "Wrong MODEL set!"
 
 
 #############################################
+
 
 
 plt.rcParams['figure.figsize'] = (10, 10)
