@@ -98,3 +98,9 @@ Training set: ~25,831 images. Test set: ~24,884 images.
 ## Note
 
 This repository is preserved as a historical artifact. The hardcoded file paths throughout the scripts (e.g., `/home/niklas/Downloads/caffe/`) reflect the original development environment and would need to be updated to run on another machine. The code itself is functional but reflects the conventions and tooling of its era.
+
+## License
+
+MIT, see [LICENSE](LICENSE). `visualize_classification.py` is adapted from Caffe's
+`00-classification.ipynb` example (Caffe, BSD 2-Clause, © BVLC and contributors). No
+model weights or iCubWorld28 images are included; download them from their sources.
